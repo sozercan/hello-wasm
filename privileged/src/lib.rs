@@ -8,7 +8,7 @@ use k8s_openapi::api::core::v1 as apicore;
 
 use alloc::vec::Vec;
 use std::mem::MaybeUninit;
-use std::env;
+// use std::env;
 
 /// Logs a message to the console using [`_log`].
 fn log(message: String) {
@@ -89,7 +89,9 @@ unsafe fn deallocate(ptr: *mut u8, size: usize) {
 fn eval() {
     // let args: Vec<_> = env::args().collect();
     // let object_to_test = &args[1];
-    let object_to_test = r#"{"apiVersion":"v1","kind":"Pod","metadata":{"name":"nginx","labels":{"app":"nginx"}},"spec":{"containers":[{"name":"nginx","image":"nginx","securityContext":{"privileged":true}}]}}"#;
+    let object_to_test = r#"{"apiVersion":"v1","kind":"Pod","metadata":{"name":"nginx","labels":{"app":"nginx"}},"spec":{"containers":[{"name":"nginx","image":"nginx","securityContext":{"privileged":false}}]}}"#;
+
+    println!("Hello from eval!");
 
     match serde_json::from_str::<apicore::Pod>(object_to_test) {
         Ok(pod) => {
